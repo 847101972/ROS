@@ -1,0 +1,21 @@
+1.topic话题是节点之间的通讯方式，实现跨包通讯，持续通讯，一直发。
+2.index.ros.org可以查看我们需要发布的内容，可以由哪个消息包来完成
+3.ros::NodeHandle,是节点和ros核心通讯的关键，可以理解为节点的管家。其实是一个类，类里有很多函数。
+4.[ros::Publisher pub = nh.advertise<std_msgs::String>("生平长进，皆在忍辱受挫之中",3);
+]这行代码，publisher理解为一个发消息的手机，管家用这个手机发送消息。advertise这个函数有两个参数，最后一个参数指，发送消息的缓存长度，指，缓存池里面可以塞得下多少条消息。如果发送太快，而接受者处理太慢，超过缓存池大小，会丢掉最老的消息。
+5.std_msgs::String这个消息，要先声明头文件。#include<std_msgs/String.h>
+7.std_msgs::String msg;
+        msg.data = "成败一时，不可丧志";
+        pub.publish(msg);//先建一个消息包，把信息往包里塞，要注意消息类型<index.ros.org>里查这个 String的名字叫data，然后用pub.publish()把消息给管家用手机发出去。
+8.注意，话题名称只能用大小写的英文字母，和一些英文符号
+9.用ros自带的工具查看ros消息发布的情况，命令行工具[rostopic] [rostopic list] [rostopic echo] 然后可以新开一个终端，用[echo -e <带双引号的消息内容>]就可以正常看见消息的内容了（限中文）
+10.[rostopic hz /<话题名字>]可以查看话题发布的频率
+11.ros::Rate loop_rate(10);然后在while循环里用loop_rate.sleep();就可以在循环里做一个阻塞，以达到前面设置的10的频率，每秒
+12.ros::Subscriber sub = nh.subscribe("Frame",10,chao_callback);subscriber者的手机定义要这样写，第三个参数是回调函数的名字--类似于单片机中的中断，然后需要单独给回调写一个子函数，在接受到消息后，回调函数中要做什么
+13.printf(msg.data.c_str());msg.data是一个c++风格的字符串，而printf是一个c语言的函数，c_str把msg.data转换成printf想要的格式。
+14. ros::spinOnce();这个意思是转身一次，就是在while循环里，去看一眼有没有消息，类似于中断的使能。
+15.一个能够显示接收时间的函数ROS_INFO(msg.data.c_str());用这个的话还需在main函数里设置中文的locare才可以让文本内容正常显示，setlocale(LC_ALL,"");LC_ALL意味着针对所有的locale，""unbuntu中文版的话意味着locale跟随系统。
+16.[INFO] [1756262938.394153557]: 成败一时，不可丧志；这个是ROS_INFO（）显示出来的，方括号内的是时间戳，表示从1970年1月1号0时0分0秒（格林尼治时间）到发送这条消息的时间总长，一般用来计算两个时间戳之间的差值。
+17.ROS_WARN()和ROS_INFO一样，不过显示的消息是黄色
+18.图形化显示话题关系的工具[rqt_graph]
+19.话题不属于发布者或者订阅者，是由ros核心管理创建的，只要代码向NodeHandle请求了就会被创建。

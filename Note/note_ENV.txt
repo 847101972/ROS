@@ -1,0 +1,18 @@
+1.(.sh)文件：用 source 来加载一连串的指令
+2.终端启动脚本：（.bashrc）是一个隐藏文件，需要用ls -a来查看，是终端程序的初始化脚本，也就是说，每次启动终端都会自动加载的脚本
+3.ros的官网：ros.org
+4.gedit onte.txt& 最后加个&可以在后台运行而不占用终端
+5.opt/ros/noetic 就是说我的ros装在这里面了。opt/ros/noetic/lib里面都是ros包的可执行文件；opt/ros/noetic/share里面是包文件
+6.rosrun turtlesim [包的可执行文件名]  这时候可以连按两次tab，直接得到这个包下的可执行文件名字
+7.roscd/rospack
+8.源代码要放在工作空间的src目录下
+9.要从github上拉代码先从apt上安装git
+10.git的可执行文件在/usr/bin里
+11.可视化文件系统的主目录其实是/home，而不是/
+12.在src文件夹下用git clone哈，拉原代码下来
+13.scripts文件夹通常用来存放脚本文件和python程序，用来安装依赖包阿等等
+14.如果缺少依赖包，那么编译或运行软件包可能就会出现问题
+15.编译完成后，把catkin_ws里的devel/setup.bash用source加载到终端中，不然会提示找不到软件包。其实跟我们之前的source /opt/ros/noetic/setup.bash是一样的（这个系统级）
+16.用roslaunch和rosrun的区别，就像是启动一整个飞机和启动一个飞机的引擎（单个节点）
+17.rosrun rqt_robot_steering rqt_robot_steering 一个发布机器人运动速度的程序
+

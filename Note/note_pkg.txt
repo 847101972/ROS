@@ -1,0 +1,15 @@
+1.在工作空间下的src用 [catkin_create_pkg <包名><依赖项>]来创建一个自己的ros包
+2.依赖项是一个比较通用的节点，干脆就拿出来作为依赖给每个需要用到的包来调用
+3.rospy：ros和python，roscpp：ros和c++，std_msgs:标准消息软件包
+4.CMakeList.txt中，双##的是对指令内容的说明，单#是指令内容的示例，你要习惯看这个英文
+5.[code package.xml]可以用这个指令直接在vscode中打开文件，当然要cd到那个文件夹下
+6.opt是系统默认安装第三方软件的地方
+7.[add_executable(${PROJECT_NAME}_node src/ssr_pkg_node.cpp)],CMakeList.txt,对编译的配置文件进行编辑，创造一个可执行文件，${PROJECT_NAME}_node指的是编译完成后的节点名，尽量和源码文件名保持一致，src/ssr_pkg_node.cpp指的是要从src目录里面的哪个文件进行编译，就是哪个文件编译为哪个节点。
+8.[catkin_make]编译完成后，会自动生成，在工作空间下的devel，生成一个setup.bash文件，这样我的rosrun就能找到这个节点来运行了。
+9.跟ros程序产生互动？，只有把代码初始化了，才能跟ros核心产生连接，才能用ros核心的各项功能。ros::init(argc,argv,<节点名字>),注意这个函数里的第二个参数，和main（）函数里面的第二个参数略有不同，会报错，删掉main（）函数里面的const
+10.argc 和 argv 是 main 函数的参数，用于接收从命令行传递过来的参数。它们让你的程序在启动时就能获取外部输入，而不是在运行后等待用户输入，这使得程序更加灵活和可脚本化。
+11.如何链接库？target_link_libraries(chao_node
+   ${catkin_LIBRARIES}
+ )，如果不在CMakeList.txt里加这行的话会提示找不到ros::init()的实现undefined reference to `ros::init(int&,
+ target_link_libraries()意思就是，把我的节点在编译好之后，和ros的库链接起来
+ 15.ros::ok()会在收到中断信号ctrl+C之后返回false；ros::ok() 提供了一种协作式的关闭机制。它让节点有机会检测到关闭请求，然后执行清理工作（如保存数据、关闭文件、发布最后一条消息等），最后再安全地退出。
