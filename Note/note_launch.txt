@@ -1,0 +1,7 @@
+1.launch是一种遵循XML语法
+2.launch文件的机制是，只要包含了一个节点，就会自己启动roscore
+3.启动launch文件时，会自动对软件包目录进行逐层搜索，所以launch文件的位置相对要求不严，不过我们可以创建个专属目录，为了搜索优雅
+4.【<node pkg="ssr_pkg" type="yao_node" name="yao_node"/>】，“pkg”是去哪个包里面去找这个节点，然后这个可执行文件的名字叫做“TYPE”，而name是，运行好这个可执行文件之后，我们管它叫做name（为了同时运行多个相同节点）
+5.<node pkg="atr_pkg" type="ma_node" name="ma_node" output="screen"/> 最后的这个output,针对【ma_node】里的两个回调函数，会让INFO函数的输出显示在屏幕上，而WARN则是无论有没有都可以输出的
+6.【<node pkg="ssr_pkg" type="chao_node" name="chao_node" launch-prefix="gnome-terminal -e"/>】launch-prefix指先执行后面的前缀指令，再运行节点，而【gnome-terminal -e】指打开一个系统终端，在里面运行前面的节点
+
